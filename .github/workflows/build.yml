@@ -1,0 +1,23 @@
+name: Build Windows Executable
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build-windows:
+    runs-on: windows-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install Rust toolchain
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Build release binary
+        run: cargo build --release
+
+      - name: Upload ttyms.exe
+        uses: actions/upload-artifact@v4
+        with:
+          name: ttyms-windows-x64
+          path: target/release/ttyms.exe
